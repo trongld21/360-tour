@@ -5,6 +5,7 @@
     <title>360&deg; Tour</title>
     <meta name="description" content="360&deg; Tour - A-Frame">
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-orbit-controls-component@1.1.0/dist/aframe-orbit-controls-component.min.js"></script>
     <script src="assets/js/tour.js"></script>
     <script src="assets/js/hotspot.js"></script>
     <script src="assets/js/panorama.js"></script>
@@ -59,6 +60,13 @@
           <a-text value="Korea Pagoda" align="center" mixin="hotspot-text"></a-text>
         </a-hotspot>
         
+        <a-entity 
+          gltf-model="assets/models/sample.glb" 
+          position="0 -15 0" 
+          scale="0.5 0.5 0.5" 
+          rotation="0 180 0"
+          orbit-controls="target: 0 1.5 -3; enableZoom: true; autoRotate: false">
+        </a-entity>
       </a-tour>
 
       <a-entity camera look-controls wasd-controls>
