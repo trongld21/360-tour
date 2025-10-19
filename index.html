@@ -2,15 +2,106 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>360&deg; Tour</title>
+    <title>AR Tour Di Tích U Minh</title>
     <meta name="description" content="360&deg; Tour - A-Frame" />
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/aframe.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-orbit-controls-component@1.1.0/dist/aframe-orbit-controls-component.min.js"></script>
     <script src="assets/js/tour.js"></script>
     <script src="assets/js/hotspot.js"></script>
     <script src="assets/js/panorama.js"></script>
   </head>
   <body>
+    <!-- 🌄 MODAL GIỚI THIỆU -->
+    <div
+      id="intro-modal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md transition-all duration-500"
+    >
+      <!-- Background -->
+      <div
+        class="absolute inset-0 bg-cover bg-center"
+        style="
+          background-image: url('assets/image/cong_truoc/home.jpg');
+          filter: brightness(0.6);
+        "
+      ></div>
+
+      <!-- Nội dung -->
+      <div
+        class="relative z-10 text-center text-white px-6 py-10 md:px-12 lg:px-24 max-w-3xl"
+      >
+        <h1
+          class="text-3xl md:text-4xl font-extrabold mb-6 drop-shadow-lg uppercase tracking-wide"
+        >
+          AR TOUR DI TÍCH U MINH
+        </h1>
+
+        <p class="text-lg md:text-xl mb-4 font-light">
+          Dự án tham quan thực tế ảo Di Tích Lịch Sử - Văn Hóa U Minh, được phát
+          triển nhằm mang đến trải nghiệm chân thực về không gian văn hóa địa
+          phương.
+        </p>
+
+        <p class="text-base md:text-lg mb-8 text-gray-300">
+          <span class="font-semibold">Đơn vị thực hiện:</span> Đoàn Trường THCS
+          Phú Thứ
+        </p>
+
+        <button
+          id="start-tour-btn"
+          class="mt-6 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white text-lg md:text-xl font-semibold py-3 px-8 rounded-full shadow-lg transition-all duration-300"
+        >
+          🚀 Bắt đầu tham quan
+        </button>
+      </div>
+    </div>
+
+    <button
+      id="sound-toggle"
+      class="fixed top-4 right-4 z-40 bg-black/60 text-white p-3 rounded-full shadow-lg hover:bg-black/80 transition-all duration-300 flex items-center justify-center"
+      title="Bật / Tắt âm thanh"
+    >
+      <svg
+        id="sound-icon-on"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 block"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 9v6h4l5 5V4l-5 5H9z"
+        />
+      </svg>
+      <svg
+        id="sound-icon-off"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 hidden"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 9v6h4l5 5V4l-5 5H9zM19 5L5 19"
+        />
+      </svg>
+    </button>
+
+    <audio id="audio-phong_tho" src="assets/audio/audio1.mp3" loop></audio>
+    <audio id="audio-gian_truoc" src="assets/audio/audio2.mp3" loop></audio>
+    <audio
+      id="audio-phong_truyen_thong"
+      src="assets/audio/audio3.mp3"
+      loop
+    ></audio>
+
     <a-scene>
       <a-assets>
         <a-mixin
@@ -28,140 +119,344 @@
       </a-assets>
       <a-tour hotspot-helper="target: #test">
         <!-- Panorama 1 -->
+        <!-- id="khleang-pagoda" -->
         <a-panorama
-          id="khleang-pagoda"
-          src="assets/image/gian_chinh.jpg"
+          id="gian_truoc_1"
+          src="assets/image/gian_truoc/1.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+        <a-panorama
+          id="gian_truoc_2"
+          src="assets/image/gian_truoc/2.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+        <a-panorama
+          id="gian_truoc_3"
+          src="assets/image/gian_truoc/5.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+        <a-panorama
+          id="gian_truoc_4"
+          src="assets/image/gian_truoc/4.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+        <a-panorama
+          id="gian_truoc_5"
+          src="assets/image/gian_truoc/3.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+        <a-panorama
+          id="gian_truoc_6"
+          src="assets/image/gian_truoc/6.jpg"
           rotation="0 0 0"
         >
         </a-panorama>
 
-        <!-- Panorama 2 -->
+        <!-- Phòng truyền thống -->
         <a-panorama
-          id="chineses-pagoda"
-          src="assets/image/gian_chinh.jpg"
-          rotation="0 -90 0"
-        ></a-panorama>
+          id="phong_truyen_thong"
+          src="assets/image/phong_truyen_thong/1.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
 
-        <!-- Panorama 3 -->
+        <!-- Phòng thờ -->
         <a-panorama
-          id="korea-pagoda"
-          src="assets/image/gian_chinh.jpg"
-          rotation="0 45 0"
-        ></a-panorama>
+          id="phong_tho"
+          src="assets/image/gian_tho/1.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
 
-        <!-- Panorama 4 -->
         <a-panorama
-          id="taiwan-pagoda"
-          src="assets/image/gian_chinh.jpg"
-          rotation="0 -45 0"
-        ></a-panorama>
+          id="phong_tho_2"
+          src="assets/image/gian_tho/2.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+
+        <a-panorama
+          id="phong_tho_3"
+          src="assets/image/gian_tho/4.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+
+        <a-panorama
+          id="phong_tho_4"
+          src="assets/image/gian_tho/5.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
 
         <!-- Hotspots -->
         <!-- From Panorama 1 to 2 -->
         <a-hotspot
-          for="khleang-pagoda"
-          to="chineses-pagoda"
-          mixin="hotspot-target"
-          position="5 0 0"
-          rotation="0 -90 0"
+          for="gian_truoc_1"
+          to="phong_truyen_thong"
+          position="-3 -4 -8"
+          rotation="0 20 0"
           visible="true"
         >
-          <a-text
-            value="China Pagoda"
-            align="center"
-            mixin="hotspot-text"
-          ></a-text>
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
         </a-hotspot>
 
-        <!-- From Panorama 2 to 1 -->
         <a-hotspot
-          for="chineses-pagoda"
-          to="khleang-pagoda"
-          mixin="hotspot-target"
-          position="2 0 5"
-          rotation="0 180 0"
-          visible="false"
+          for="gian_truoc_1"
+          to="gian_truoc_2"
+          position="3 -4 8"
+          rotation="0 200 0"
+          visible="true"
         >
-          <a-text
-            value="Soc Trang Pagoda"
-            align="center"
-            mixin="hotspot-text"
-          ></a-text>
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
         </a-hotspot>
 
-        <!-- From Panorama 2 to 3 -->
         <a-hotspot
-          for="chineses-pagoda"
-          to="korea-pagoda"
-          mixin="hotspot-target"
-          position="4 0 2"
-          rotation="0 -45 0"
+          for="gian_truoc_2"
+          to="gian_truoc_1"
+          position="3 -6 8"
+          rotation="0 -175 0"
           visible="false"
         >
-          <a-text
-            value="Korea Pagoda"
-            align="center"
-            mixin="hotspot-text"
-          ></a-text>
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
         </a-hotspot>
 
-        <!-- From Panorama 3 to 2 -->
         <a-hotspot
-          for="korea-pagoda"
-          to="chineses-pagoda"
-          mixin="hotspot-target"
-          position="-4 0 2"
-          rotation="0 135 0"
+          for="gian_truoc_2"
+          to="gian_truoc_3"
+          position="0 -4 -8"
+          rotation="0 0 0"
           visible="false"
         >
-          <a-text
-            value="China Pagoda"
-            align="center"
-            mixin="hotspot-text"
-          ></a-text>
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
         </a-hotspot>
 
-        <!-- From Panorama 3 to 4 -->
         <a-hotspot
-          for="korea-pagoda"
-          to="taiwan-pagoda"
-          mixin="hotspot-target"
-          position="3 0 -4"
-          rotation="0 90 0"
+          for="gian_truoc_3"
+          to="gian_truoc_2"
+          position="-1 -4 -8"
+          rotation="0 0 0"
           visible="false"
         >
-          <a-text
-            value="Taiwan Pagoda"
-            align="center"
-            mixin="hotspot-text"
-          ></a-text>
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
         </a-hotspot>
 
-        <!-- From Panorama 4 to 3 -->
         <a-hotspot
-          for="taiwan-pagoda"
-          to="korea-pagoda"
-          mixin="hotspot-target"
-          position="3 0 5"
-          rotation="0 -90 0"
+          for="gian_truoc_2"
+          to="phong_tho"
+          position="-7 -2 1"
+          rotation="0 0 0"
           visible="false"
         >
-          <a-text
-            value="Korea Pagoda"
-            align="center"
-            mixin="hotspot-text"
-          ></a-text>
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 -90 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_tho"
+          to="gian_truoc_2"
+          position="10 -3 0"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 90 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_tho"
+          to="phong_tho_2"
+          position="-5 -5 0"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 -90 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_tho"
+          to="phong_tho_3"
+          position="0 -5 5"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 0 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_tho_3"
+          to="phong_tho"
+          position="-2 -5 -5"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 190 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_tho"
+          to="phong_tho_4"
+          position="0 -5 -5"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_tho_4"
+          to="phong_tho"
+          position="0 -5 5"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 0 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_tho_2"
+          to="phong_tho"
+          position="10 -5 0"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 90 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_truyen_thong"
+          to="gian_truoc_1"
+          position="2 -3 -8"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
         </a-hotspot>
       </a-tour>
 
-      <a-entity
+      <!-- <a-entity
         gltf-model="assets/models/sample.glb"
         position="0 -2 -5"
         scale="1 1 1"
         rotation="0 180 0"
         animation="property: rotation; from: 0 180 0; to: 0 540 0; loop: true; dur: 10000; easing: linear"
       >
-      </a-entity>
+      </a-entity> -->
 
       <a-entity camera look-controls wasd-controls>
         <a-entity
@@ -173,5 +468,93 @@
         </a-entity>
       </a-entity>
     </a-scene>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("intro-modal");
+        const startBtn = document.getElementById("start-tour-btn");
+        const soundBtn = document.getElementById("sound-toggle");
+        const soundOn = document.getElementById("sound-icon-on");
+        const soundOff = document.getElementById("sound-icon-off");
+
+        const audios = {
+          phong_tho: document.getElementById("audio-phong_tho"),
+          gian_truoc: document.getElementById("audio-gian_truoc"),
+          phong_truyen_thong: document.getElementById(
+            "audio-phong_truyen_thong"
+          ),
+        };
+
+        let currentAudio = null;
+        let currentGroup = null; // nhóm hiện tại (vd: phong_tho)
+        let soundEnabled = true;
+
+        // Ẩn modal khi bắt đầu
+        startBtn.addEventListener("click", () => {
+          modal.classList.add("opacity-0", "pointer-events-none");
+          setTimeout(() => (modal.style.display = "none"), 600);
+          playAudio("gian_truoc");
+        });
+
+        // Bật / tắt âm thanh
+        soundBtn.addEventListener("click", () => {
+          soundEnabled = !soundEnabled;
+          soundOn.classList.toggle("hidden", !soundEnabled);
+          soundOff.classList.toggle("hidden", soundEnabled);
+
+          if (!soundEnabled && currentAudio) {
+            currentAudio.pause();
+          } else if (soundEnabled && currentAudio) {
+            currentAudio.play();
+          }
+        });
+
+        // Hàm xác định nhóm âm thanh theo id
+        function getGroup(sceneId) {
+          if (sceneId.includes("phong_tho")) return "phong_tho";
+          if (sceneId.includes("gian_truoc")) return "gian_truoc";
+          if (sceneId.includes("phong_truyen_thong"))
+            return "phong_truyen_thong";
+          return null;
+        }
+
+        // Hàm phát âm thanh tương ứng
+        function playAudio(sceneId) {
+          const newGroup = getGroup(sceneId);
+          if (!newGroup) return;
+
+          // Nếu vẫn cùng nhóm => không reset âm thanh
+          if (
+            currentGroup === newGroup &&
+            currentAudio &&
+            !currentAudio.paused
+          ) {
+            return;
+          }
+
+          // Nếu nhóm khác => tắt âm thanh cũ và phát nhạc mới
+          if (currentAudio) {
+            currentAudio.pause();
+          }
+
+          currentGroup = newGroup;
+          currentAudio = audios[newGroup];
+
+          if (soundEnabled && currentAudio) {
+            currentAudio.play();
+          }
+        }
+
+        // Hook vào component tour (khi đổi cảnh)
+        const tourEl = document.querySelector("a-tour");
+        const originalLoadSceneId = tourEl.components["tour"].loadSceneId.bind(
+          tourEl.components["tour"]
+        );
+
+        tourEl.components["tour"].loadSceneId = function (id) {
+          originalLoadSceneId(id);
+          playAudio(id);
+        };
+      });
+    </script>
   </body>
 </html>
