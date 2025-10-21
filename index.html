@@ -38,14 +38,14 @@
         </h1>
 
         <p class="text-lg md:text-xl mb-4 font-light">
-          Dự án tham quan thực tế ảo Di Tích Lịch Sử - Văn Hóa U Minh, được phát
-          triển nhằm mang đến trải nghiệm chân thực về không gian văn hóa địa
-          phương.
+          <span class="font-semibold">Công trình thanh niên</span> Chào mừng
+          thành công Đại hội đại biểu Đoàn Thanh niên Cộng sản Hồ Chí Minh
+          Phường Hưng Phú lần thứ I, nhiệm kỳ 2025 - 2030.
         </p>
 
         <p class="text-base md:text-lg mb-8 text-gray-300">
-          <span class="font-semibold">Đơn vị thực hiện:</span> Đoàn Trường THCS
-          Phú Thứ
+          <span class="font-semibold">Đơn vị thực hiện:</span> Đoàn Thanh niên
+          Cộng sản Hồ Chí Minh Phường Hưng Phú
         </p>
 
         <button
@@ -55,6 +55,117 @@
           🚀 Bắt đầu tham quan
         </button>
       </div>
+    </div>
+
+    <!-- 🖼️ Nút mở gallery ảnh -->
+    <!-- 🖼️ Nút mở gallery ảnh (đặt cạnh nút âm thanh) -->
+    <button
+      id="open-gallery-btn"
+      class="fixed top-4 right-20 z-40 bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
+      title="Xem hình ảnh tư liệu"
+    >
+      <img src="assets/image/icon/gallery.svg" alt="icon" class="h-6 w-6" />
+    </button>
+
+    <!-- 📖 Modal hiển thị gallery -->
+    <div
+      id="gallery-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-md transition-all duration-500"
+    >
+      <div class="relative w-full max-w-5xl mx-auto px-4">
+        <!-- Nút đóng -->
+        <button
+          id="close-gallery-btn"
+          class="absolute top-3 right-3 z-50 bg-white/20 hover:bg-white/30 text-white rounded-full p-2 transition-all h-12 w-12"
+          title="Đóng"
+        >
+          ✕
+        </button>
+
+        <!-- Ảnh hiển thị -->
+        <div class="relative flex justify-center items-center">
+          <img
+            id="gallery-image"
+            src=""
+            alt="Hình ảnh tư liệu"
+            class="max-h-[80vh] w-auto rounded-xl shadow-lg object-contain transition-all duration-300"
+          />
+        </div>
+
+        <!-- Nút chuyển ảnh -->
+        <div
+          class="absolute inset-x-0 top-1/2 flex justify-between items-center px-6"
+        >
+          <button
+            id="prev-image"
+            class="bg-white/20 hover:bg-white/40 text-white text-3xl font-bold w-12 h-12 rounded-full flex justify-center items-center"
+          >
+            ‹
+          </button>
+          <button
+            id="next-image"
+            class="bg-white/20 hover:bg-white/40 text-white text-3xl font-bold w-12 h-12 rounded-full flex justify-center items-center"
+          >
+            ›
+          </button>
+        </div>
+
+        <!-- Chỉ số ảnh -->
+        <div class="text-center mt-4 text-white text-sm md:text-base">
+          <span id="gallery-counter"></span>
+        </div>
+      </div>
+    </div>
+
+    <button
+      id="narration-btn"
+      class="fixed top-4 right-36 z-40 bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
+      title="Phát / Tạm dừng thuyết minh"
+    >
+      <!-- ▶️ Icon phát -->
+      <svg
+        id="narration-icon-play"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-6 h-6 block"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M8 5v14l11-7-11-7z"
+        />
+      </svg>
+
+      <!-- ⏸ Icon tạm dừng -->
+      <svg
+        id="narration-icon-pause"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-6 h-6 hidden"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10 9v6m4-6v6m-9 8h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"
+        />
+      </svg>
+    </button>
+
+    <!-- 🎧 Thanh audio player -->
+    <div
+      id="narration-player"
+      class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-md rounded-xl px-4 py-2 shadow-lg flex items-center justify-center w-[90%] max-w-md z-50"
+    >
+      <audio id="narration-audio" controls class="w-full">
+        <source src="assets/audio/offvoice_uminh.mp3" type="audio/mpeg" />
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+      </audio>
     </div>
 
     <button
@@ -458,7 +569,7 @@
       >
       </a-entity> -->
 
-      <a-entity camera look-controls wasd-controls>
+      <a-entity camera look-controls wasd-controls rotation="0 45 0">
         <a-entity
           cursor
           position="0 0 -1"
@@ -476,75 +587,71 @@
         const soundOn = document.getElementById("sound-icon-on");
         const soundOff = document.getElementById("sound-icon-off");
 
-        const audios = {
-          phong_tho: document.getElementById("audio-phong_tho"),
-          gian_truoc: document.getElementById("audio-gian_truoc"),
-          phong_truyen_thong: document.getElementById(
-            "audio-phong_truyen_thong"
-          ),
-        };
+        const audioGeneral = new Audio("assets/audio/audio.mp3");
+        audioGeneral.loop = true;
+
+        const narrationPlayer = document.getElementById("narration-player");
+        const narrationAudio = document.getElementById("narration-audio");
+        const narrationBtn = document.getElementById("narration-btn");
+        const narrationIconPlay = document.getElementById(
+          "narration-icon-play"
+        );
+        const narrationIconPause = document.getElementById(
+          "narration-icon-pause"
+        );
 
         let currentAudio = null;
-        let currentGroup = null; // nhóm hiện tại (vd: phong_tho)
         let soundEnabled = true;
 
-        // Ẩn modal khi bắt đầu
+        // 🚀 Khi bấm "Bắt đầu tham quan" → vào PHÒNG THỜ và tự phát offvoice
         startBtn.addEventListener("click", () => {
           modal.classList.add("opacity-0", "pointer-events-none");
           setTimeout(() => (modal.style.display = "none"), 600);
-          playAudio("gian_truoc");
+
+          const tourEl = document.querySelector("a-tour");
+          const cameraEl = document.querySelector("[camera]");
+
+          // Chuyển thẳng đến phòng thờ
+          if (tourEl && tourEl.components["tour"]) {
+            tourEl.components["tour"].loadSceneId("phong_tho");
+          }
+
+          // Xoay góc nhìn camera
+          setTimeout(() => {
+            if (cameraEl) cameraEl.setAttribute("rotation", "0 45 0");
+          }, 1000);
+
+          // Tắt nhạc nền & phát thuyết minh
+          if (currentAudio) currentAudio.pause();
+          audioGeneral.pause();
+
+          narrationPlayer.classList.remove("hidden");
+          currentAudio = narrationAudio;
+          narrationAudio.currentTime = 0;
+          if (soundEnabled) narrationAudio.play();
+
+          // Đổi icon sang Pause
+          narrationIconPlay.classList.add("hidden");
+          narrationIconPause.classList.remove("hidden");
         });
 
-        // Bật / tắt âm thanh
+        // 🔇 Bật / tắt âm thanh nền
         soundBtn.addEventListener("click", () => {
           soundEnabled = !soundEnabled;
           soundOn.classList.toggle("hidden", !soundEnabled);
           soundOff.classList.toggle("hidden", soundEnabled);
 
-          if (!soundEnabled && currentAudio) {
-            currentAudio.pause();
-          } else if (soundEnabled && currentAudio) {
-            currentAudio.play();
+          if (!soundEnabled) {
+            if (currentAudio) currentAudio.pause();
+            audioGeneral.pause();
+            narrationAudio.pause();
+          } else {
+            if (currentAudio) currentAudio.play();
+            else audioGeneral.play();
           }
         });
 
-        // Hàm xác định nhóm âm thanh theo id
-        function getGroup(sceneId) {
-          if (sceneId.includes("phong_tho")) return "phong_tho";
-          if (sceneId.includes("gian_truoc")) return "gian_truoc";
-          if (sceneId.includes("phong_truyen_thong"))
-            return "phong_truyen_thong";
-          return null;
-        }
-
-        // Hàm phát âm thanh tương ứng
-        function playAudio(sceneId) {
-          const newGroup = getGroup(sceneId);
-          if (!newGroup) return;
-
-          // Nếu vẫn cùng nhóm => không reset âm thanh
-          if (
-            currentGroup === newGroup &&
-            currentAudio &&
-            !currentAudio.paused
-          ) {
-            return;
-          }
-
-          // Nếu nhóm khác => tắt âm thanh cũ và phát nhạc mới
-          if (currentAudio) {
-            currentAudio.pause();
-          }
-
-          currentGroup = newGroup;
-          currentAudio = audios[newGroup];
-
-          if (soundEnabled && currentAudio) {
-            currentAudio.play();
-          }
-        }
-
-        // Hook vào component tour (khi đổi cảnh)
+        // 🎧 Khi đổi scene → tự phát offvoice nếu là phòng thờ
         const tourEl = document.querySelector("a-tour");
         const originalLoadSceneId = tourEl.components["tour"].loadSceneId.bind(
           tourEl.components["tour"]
@@ -552,8 +659,116 @@
 
         tourEl.components["tour"].loadSceneId = function (id) {
           originalLoadSceneId(id);
-          playAudio(id);
+          handleSceneChange(id);
         };
+
+        function handleSceneChange(id) {
+          const isPhongTho = id.includes("phong_tho");
+
+          if (currentAudio) currentAudio.pause();
+          audioGeneral.pause();
+          narrationAudio.pause();
+
+          if (isPhongTho) {
+            narrationPlayer.classList.remove("hidden");
+            currentAudio = narrationAudio;
+            narrationAudio.currentTime = 0;
+            if (soundEnabled) narrationAudio.play();
+            narrationIconPlay.classList.add("hidden");
+            narrationIconPause.classList.remove("hidden");
+          } else {
+            narrationPlayer.classList.add("hidden");
+            currentAudio = audioGeneral;
+            if (soundEnabled) audioGeneral.play();
+          }
+        }
+
+        // 🎙️ Nút bật/tắt thuyết minh thủ công
+        narrationBtn.addEventListener("click", () => {
+          narrationPlayer.classList.remove("hidden");
+
+          if (narrationAudio.paused) {
+            if (currentAudio) currentAudio.pause();
+            audioGeneral.pause();
+
+            currentAudio = narrationAudio;
+            narrationAudio.play();
+            narrationIconPlay.classList.add("hidden");
+            narrationIconPause.classList.remove("hidden");
+          } else {
+            narrationAudio.pause();
+            narrationIconPlay.classList.remove("hidden");
+            narrationIconPause.classList.add("hidden");
+          }
+        });
+
+        // Khi kết thúc hoặc pause → đồng bộ icon
+        narrationAudio.addEventListener("ended", () => {
+          narrationPlayer.classList.add("hidden");
+          narrationIconPlay.classList.remove("hidden");
+          narrationIconPause.classList.add("hidden");
+        });
+        narrationAudio.addEventListener("pause", () => {
+          narrationIconPlay.classList.remove("hidden");
+          narrationIconPause.classList.add("hidden");
+        });
+        narrationAudio.addEventListener("play", () => {
+          narrationIconPlay.classList.add("hidden");
+          narrationIconPause.classList.remove("hidden");
+        });
+
+        // ======================= GALLERY SLIDESHOW (GIỮ NGUYÊN) ==========================
+        const galleryModal = document.getElementById("gallery-modal");
+        const openGalleryBtn = document.getElementById("open-gallery-btn");
+        const closeGalleryBtn = document.getElementById("close-gallery-btn");
+        const galleryImage = document.getElementById("gallery-image");
+        const prevBtn = document.getElementById("prev-image");
+        const nextBtn = document.getElementById("next-image");
+        const galleryCounter = document.getElementById("gallery-counter");
+
+        const totalImages = 26;
+        let currentIndex = 1;
+
+        function updateGallery() {
+          galleryImage.src = `assets/image/can_bo/${currentIndex}.jpg`;
+          galleryCounter.textContent = `Hình ${currentIndex} / ${totalImages}`;
+        }
+
+        openGalleryBtn.addEventListener("click", () => {
+          galleryModal.classList.remove("hidden");
+          galleryModal.classList.add("flex");
+          currentIndex = 1;
+          updateGallery();
+        });
+
+        closeGalleryBtn.addEventListener("click", () => {
+          galleryModal.classList.add("hidden");
+        });
+
+        nextBtn.addEventListener("click", () => {
+          currentIndex = currentIndex < totalImages ? currentIndex + 1 : 1;
+          updateGallery();
+        });
+
+        prevBtn.addEventListener("click", () => {
+          currentIndex = currentIndex > 1 ? currentIndex - 1 : totalImages;
+          updateGallery();
+        });
+
+        galleryModal.addEventListener("click", (e) => {
+          if (e.target === galleryModal) galleryModal.classList.add("hidden");
+        });
+
+        let startX = 0;
+        galleryImage.addEventListener(
+          "touchstart",
+          (e) => (startX = e.touches[0].clientX)
+        );
+        galleryImage.addEventListener("touchend", (e) => {
+          const diff = e.changedTouches[0].clientX - startX;
+          if (diff > 50) prevBtn.click();
+          if (diff < -50) nextBtn.click();
+        });
       });
     </script>
   </body>
