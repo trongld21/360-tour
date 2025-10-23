@@ -59,13 +59,123 @@
 
     <!-- 🖼️ Nút mở gallery ảnh -->
     <!-- 🖼️ Nút mở gallery ảnh (đặt cạnh nút âm thanh) -->
-    <button
+    <!-- <button
       id="open-gallery-btn"
       class="fixed top-4 right-20 z-40 bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
       title="Xem hình ảnh tư liệu"
     >
       <img src="assets/image/icon/gallery.svg" alt="icon" class="h-6 w-6" />
-    </button>
+    </button> -->
+
+    <div class="fixed top-4 right-4 z-40 flex gap-3">
+      <!-- Nút thuyết minh -->
+      <button
+        id="narration-btn"
+        class="group bg-black/70 hover:bg-white/10 text-white px-2 py-3 md:px-4 md:py-3 rounded-full shadow-md hover:shadow-lg border border-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md"
+      >
+        <svg
+          id="narration-icon-play"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8 5v14l11-7-11-7z"
+          />
+        </svg>
+        <svg
+          id="narration-icon-pause"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5 hidden transition-transform duration-300 group-hover:scale-110"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M10 9v6m4-6v6"
+          />
+        </svg>
+        <span class="text-xs font-medium">Thuyết minh</span>
+        <span
+          class="absolute bottom-[-3rem] text-[11px] bg-black/80 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          Phát / Tạm dừng thuyết minh
+        </span>
+      </button>
+
+      <!-- Nút tư liệu -->
+      <button
+        id="open-gallery-btn"
+        class="group bg-black/70 hover:bg-white/10 text-white px-5 py-3 md:px-7 md:py-3 rounded-full shadow-md hover:shadow-lg border border-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md"
+      >
+        <img
+          src="assets/image/icon/gallery.svg"
+          alt="icon"
+          class="h-5 w-5 transition-transform duration-300 group-hover:scale-110"
+        />
+        <span class="text-xs font-medium">Tư liệu</span>
+        <span
+          class="absolute bottom-[-2.5rem] text-[11px] bg-black/80 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          Tư liệu hình ảnh
+        </span>
+      </button>
+
+      <!-- Nút âm thanh -->
+      <button
+        id="sound-toggle"
+        class="group bg-black/70 hover:bg-white/10 text-white px-3 md:px-5 md:py-3 rounded-full shadow-md hover:shadow-lg border border-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md"
+      >
+        <!-- Icon bật -->
+        <svg
+          id="sound-icon-on"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 block transition-transform duration-300 group-hover:scale-110"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 9v6h4l5 5V4l-5 5H9z"
+          />
+        </svg>
+
+        <!-- Icon tắt -->
+        <svg
+          id="sound-icon-off"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 hidden transition-transform duration-300 group-hover:scale-110"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 9v6h4l5 5V4l-5 5H9zM19 5L5 19"
+          />
+        </svg>
+
+        <span class="text-xs font-medium">Âm thanh</span>
+        <span
+          class="absolute bottom-[-2.5rem] text-[11px] bg-black/80 text-white md:px-2 md:py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          Bật / Tắt âm thanh
+        </span>
+      </button>
+    </div>
 
     <!-- 📖 Modal hiển thị gallery -->
     <div
@@ -117,12 +227,11 @@
       </div>
     </div>
 
-    <button
+    <!-- <button
       id="narration-btn"
       class="fixed top-4 right-36 z-40 bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
       title="Phát / Tạm dừng thuyết minh"
     >
-      <!-- ▶️ Icon phát -->
       <svg
         id="narration-icon-play"
         xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +248,6 @@
         />
       </svg>
 
-      <!-- ⏸ Icon tạm dừng -->
       <svg
         id="narration-icon-pause"
         xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +263,7 @@
           d="M10 9v6m4-6v6m-9 8h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"
         />
       </svg>
-    </button>
+    </button> -->
 
     <!-- 🎧 Thanh audio player -->
     <div
@@ -168,7 +276,7 @@
       </audio>
     </div>
 
-    <button
+    <!-- <button
       id="sound-toggle"
       class="fixed top-4 right-4 z-40 bg-black/60 text-white p-3 rounded-full shadow-lg hover:bg-black/80 transition-all duration-300 flex items-center justify-center"
       title="Bật / Tắt âm thanh"
@@ -203,7 +311,7 @@
           d="M9 9v6h4l5 5V4l-5 5H9zM19 5L5 19"
         />
       </svg>
-    </button>
+    </button> -->
 
     <audio id="audio-phong_tho" src="assets/audio/audio1.mp3" loop></audio>
     <audio id="audio-gian_truoc" src="assets/audio/audio2.mp3" loop></audio>
@@ -357,14 +465,14 @@
             look-at="[camera]"
             animation=""
             rotation="90 180 90"
-            scale="2 2 2"
+            scale="3 3 3"
           ></a-image>
         </a-hotspot>
 
         <a-hotspot
           for="gian_truoc_2"
           to="gian_truoc_3"
-          position="0 -4 -8"
+          position="0 -6 -8"
           rotation="0 0 0"
           visible="false"
         >
@@ -375,7 +483,7 @@
             look-at="[camera]"
             animation=""
             rotation="90 180 90"
-            scale="2 2 2"
+            scale="3 3 3"
           ></a-image>
         </a-hotspot>
 
@@ -400,7 +508,7 @@
         <a-hotspot
           for="gian_truoc_2"
           to="phong_tho"
-          position="-7 -2 1"
+          position="-7 -3 1"
           rotation="0 0 0"
           visible="false"
         >
@@ -418,7 +526,7 @@
         <a-hotspot
           for="phong_tho"
           to="gian_truoc_2"
-          position="10 -3 0"
+          position="10 -8 0"
           rotation="0 0 0"
           visible="false"
         >
@@ -429,7 +537,7 @@
             look-at="[camera]"
             animation=""
             rotation="90 90 90"
-            scale="2 2 2"
+            scale="3 3 3"
           ></a-image>
         </a-hotspot>
 
@@ -537,7 +645,7 @@
             look-at="[camera]"
             animation=""
             rotation="90 90 90"
-            scale="2 2 2"
+            scale="3 3 3"
           ></a-image>
         </a-hotspot>
 
@@ -658,9 +766,44 @@
         );
 
         tourEl.components["tour"].loadSceneId = function (id) {
-          originalLoadSceneId(id);
-          handleSceneChange(id);
+          showLoading();
+          const panorama = document.getElementById(id);
+          if (!panorama) return;
+
+          // Tạo đối tượng Image để preload
+          const imgSrc = panorama.getAttribute("src");
+          const img = new Image();
+
+          img.onload = () => {
+            setTimeout(() => {
+              // Khi ảnh load xong → đổi cảnh
+              originalLoadSceneId(id);
+              handleSceneChange(id);
+              hideLoading(); // Ẩn overlay
+            }, 300); // thêm delay cho mượt
+          };
+
+          // Giả lập tiến trình (animation thanh progress)
+          let progress = 0;
+          const bar = document.getElementById("loading-bar");
+          const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            bar.style.width = `${Math.min(progress, 95)}%`;
+            if (progress >= 95) clearInterval(interval);
+          }, 200);
+
+          img.src = imgSrc; // Bắt đầu tải ảnh
         };
+
+        function showLoading() {
+          const overlay = document.getElementById("loading-overlay");
+          overlay.classList.remove("hidden");
+        }
+
+        function hideLoading() {
+          const overlay = document.getElementById("loading-overlay");
+          setTimeout(() => overlay.classList.add("hidden"), 400);
+        }
 
         function handleSceneChange(id) {
           const isPhongTho = id.includes("phong_tho");
@@ -772,4 +915,36 @@
       });
     </script>
   </body>
+
+  <!-- 🌈 Circular Loading Overlay -->
+  <div
+    id="loading-overlay"
+    class="fixed inset-0 z-[100] hidden bg-black/80 flex flex-col items-center justify-center text-white backdrop-blur-md"
+  >
+    <div class="relative w-16 h-16">
+      <div
+        class="absolute inset-0 border-4 border-t-blue-500 border-white/20 rounded-full animate-spin"
+      ></div>
+    </div>
+    <p id="loading-text" class="mt-5 text-sm text-gray-200 tracking-wide">
+      Đang tải cảnh...
+    </p>
+  </div>
+  
+  <style>
+    /* Hiệu ứng xoay mượt */
+    @keyframes spin-smooth {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Nếu bạn không dùng Tailwind animate-spin */
+    .animate-spin {
+      animation: spin-smooth 1s linear infinite;
+    }
+  </style>
 </html>
