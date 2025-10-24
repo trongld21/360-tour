@@ -338,7 +338,14 @@
       </a-assets>
       <a-tour hotspot-helper="target: #test">
         <!-- Panorama 1 -->
-        <!-- id="khleang-pagoda" -->
+
+        <a-panorama
+          id="phong_tho"
+          src="assets/image/gian_tho/1.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+
         <a-panorama
           id="gian_truoc_1"
           src="assets/image/gian_truoc/1.jpg"
@@ -385,12 +392,6 @@
         </a-panorama>
 
         <!-- Phòng thờ -->
-        <a-panorama
-          id="phong_tho"
-          src="assets/image/gian_tho/1.jpg"
-          rotation="0 0 0"
-        >
-        </a-panorama>
 
         <a-panorama
           id="phong_tho_2"
@@ -420,7 +421,7 @@
           to="phong_truyen_thong"
           position="-3 -4 -8"
           rotation="0 20 0"
-          visible="true"
+          visible="false"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -438,7 +439,7 @@
           to="gian_truoc_2"
           position="3 -4 8"
           rotation="0 200 0"
-          visible="true"
+          visible="false"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -528,7 +529,7 @@
           to="gian_truoc_2"
           position="10 -8 0"
           rotation="0 0 0"
-          visible="false"
+          visible="true"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -546,7 +547,7 @@
           to="phong_tho_2"
           position="-5 -5 0"
           rotation="0 0 0"
-          visible="false"
+          visible="true"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -564,7 +565,7 @@
           to="phong_tho_3"
           position="0 -5 5"
           rotation="0 0 0"
-          visible="false"
+          visible="true"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -600,7 +601,7 @@
           to="phong_tho_4"
           position="0 -5 -5"
           rotation="0 0 0"
-          visible="false"
+          visible="true"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -719,16 +720,6 @@
           const tourEl = document.querySelector("a-tour");
           const cameraEl = document.querySelector("[camera]");
 
-          // Chuyển thẳng đến phòng thờ
-          if (tourEl && tourEl.components["tour"]) {
-            tourEl.components["tour"].loadSceneId("phong_tho");
-          }
-
-          // Xoay góc nhìn camera
-          setTimeout(() => {
-            if (cameraEl) cameraEl.setAttribute("rotation", "0 45 0");
-          }, 1000);
-
           // Tắt nhạc nền & phát thuyết minh
           if (currentAudio) currentAudio.pause();
           audioGeneral.pause();
@@ -808,18 +799,24 @@
         function handleSceneChange(id) {
           const isPhongTho = id.includes("phong_tho");
 
-          if (currentAudio) currentAudio.pause();
-          audioGeneral.pause();
-          narrationAudio.pause();
-
+          // Nếu đang phát thuyết minh và tiếp tục vào phòng thờ → KHÔNG reset
           if (isPhongTho) {
             narrationPlayer.classList.remove("hidden");
-            currentAudio = narrationAudio;
-            narrationAudio.currentTime = 0;
-            if (soundEnabled) narrationAudio.play();
+
+            // Nếu audio hiện tại KHÔNG phải thuyết minh → chuyển sang thuyết minh nhưng không reset
+            if (currentAudio !== narrationAudio) {
+              if (currentAudio) currentAudio.pause();
+              audioGeneral.pause();
+              currentAudio = narrationAudio;
+              if (soundEnabled) narrationAudio.play();
+            }
+
             narrationIconPlay.classList.add("hidden");
             narrationIconPause.classList.remove("hidden");
           } else {
+            // Rời khỏi phòng thờ → giữ nguyên tiến trình thuyết minh (pause chứ không reset)
+            if (currentAudio === narrationAudio) narrationAudio.pause();
+
             narrationPlayer.classList.add("hidden");
             currentAudio = audioGeneral;
             if (soundEnabled) audioGeneral.play();
@@ -930,7 +927,7 @@
       Đang tải cảnh...
     </p>
   </div>
-  
+
   <style>
     /* Hiệu ứng xoay mượt */
     @keyframes spin-smooth {
