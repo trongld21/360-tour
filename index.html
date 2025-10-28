@@ -32,21 +32,20 @@
         class="relative z-10 text-center text-white px-6 py-10 md:px-12 lg:px-24 max-w-3xl"
       >
         <h1
-          class="text-3xl md:text-4xl font-extrabold mb-6 drop-shadow-lg uppercase tracking-wide"
+          class="text-base md:text-2xl font-extrabold mb-6 drop-shadow-lg uppercase tracking-wide"
         >
-          AR TOUR DI TÍCH U MINH
+          TOUR THỰC TẾ ẢO TĂNG CƯỜNG (AR) <br/> THAM QUAN DI TÍCH ĐỀN THỜ <br/> CÁC ANH HÙNG LIỆT SĨ <br/> TRUNG ĐOÀN 1 U MINH TẠI TP. CẦN THƠ
         </h1>
-
+        <div class="w-full flex flex-col justify-center items-center">
+          <img src="/assets/image/icon/logo.png" class="w-24 h-24" />
+        </div>
+        <div class="bg-black bg-opacity-20 rounded-lg mt-6">
         <p class="text-lg md:text-xl mb-4 font-light">
-          <span class="font-semibold">Công trình thanh niên</span> Chào mừng
-          thành công Đại hội đại biểu Đoàn Thanh niên Cộng sản Hồ Chí Minh
-          Phường Hưng Phú lần thứ I, nhiệm kỳ 2025 - 2030.
+          Công trình thanh niên chào mừng
+          <br/> thành công Đại hội đại biểu <br/> Đoàn Thanh niên Cộng sản Hồ Chí Minh
+          Phường Hưng Phú lần thứ I <br/> nhiệm kỳ 2025 - 2030.
         </p>
-
-        <p class="text-base md:text-lg mb-8 text-gray-300">
-          <span class="font-semibold">Đơn vị thực hiện:</span> Đoàn Thanh niên
-          Cộng sản Hồ Chí Minh Phường Hưng Phú
-        </p>
+        </div>
 
         <button
           id="start-tour-btn"
@@ -54,6 +53,7 @@
         >
           🚀 Bắt đầu tham quan
         </button>
+        <p class="text-[10px] mt-4 opacity-80">Bản quyền thuộc về: Đoàn TNCS Hồ Chí Minh Phường Hưng Phú</p>
       </div>
     </div>
 
@@ -421,7 +421,7 @@
           to="phong_truyen_thong"
           position="-3 -4 -8"
           rotation="0 20 0"
-          visible="false"
+          visible="true"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -439,7 +439,7 @@
           to="gian_truoc_2"
           position="3 -4 8"
           rotation="0 200 0"
-          visible="false"
+          visible="true"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -529,7 +529,7 @@
           to="gian_truoc_2"
           position="10 -8 0"
           rotation="0 0 0"
-          visible="true"
+          visible="false"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -547,7 +547,7 @@
           to="phong_tho_2"
           position="-5 -5 0"
           rotation="0 0 0"
-          visible="true"
+          visible="false"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -565,7 +565,7 @@
           to="phong_tho_3"
           position="0 -5 5"
           rotation="0 0 0"
-          visible="true"
+          visible="false"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -601,7 +601,7 @@
           to="phong_tho_4"
           position="0 -5 -5"
           rotation="0 0 0"
-          visible="true"
+          visible="false"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -799,24 +799,18 @@
         function handleSceneChange(id) {
           const isPhongTho = id.includes("phong_tho");
 
-          // Nếu đang phát thuyết minh và tiếp tục vào phòng thờ → KHÔNG reset
+          if (currentAudio) currentAudio.pause();
+          audioGeneral.pause();
+          narrationAudio.pause();
+
           if (isPhongTho) {
             narrationPlayer.classList.remove("hidden");
-
-            // Nếu audio hiện tại KHÔNG phải thuyết minh → chuyển sang thuyết minh nhưng không reset
-            if (currentAudio !== narrationAudio) {
-              if (currentAudio) currentAudio.pause();
-              audioGeneral.pause();
-              currentAudio = narrationAudio;
-              if (soundEnabled) narrationAudio.play();
-            }
-
+            currentAudio = narrationAudio;
+            narrationAudio.currentTime = 0;
+            if (soundEnabled) narrationAudio.play();
             narrationIconPlay.classList.add("hidden");
             narrationIconPause.classList.remove("hidden");
           } else {
-            // Rời khỏi phòng thờ → giữ nguyên tiến trình thuyết minh (pause chứ không reset)
-            if (currentAudio === narrationAudio) narrationAudio.pause();
-
             narrationPlayer.classList.add("hidden");
             currentAudio = audioGeneral;
             if (soundEnabled) audioGeneral.play();
@@ -942,6 +936,11 @@
     /* Nếu bạn không dùng Tailwind animate-spin */
     .animate-spin {
       animation: spin-smooth 1s linear infinite;
+    }
+
+    .text-outline {
+      -webkit-text-stroke: 2px white;
+      color: #1c01b1;
     }
   </style>
 </html>
