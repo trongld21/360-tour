@@ -12,6 +12,100 @@
     <script src="assets/js/hotspot.js"></script>
     <script src="assets/js/panorama.js"></script>
   </head>
+  <!-- SIDE DRAWER: Danh sách cảnh -->
+  <aside
+    id="side-menu"
+    class="fixed inset-y-0 right-0 z-[60] w-80 md:w-96 translate-x-full bg-[#0b1b3a]/95 text-white border-l border-white/10 backdrop-blur-md transition-transform duration-300"
+  >
+    <!-- Header -->
+    <div class="flex items-center justify-between p-3 border-b border-white/10">
+      <div class="flex items-center gap-2">
+        <img src="assets/image/icon/logo.png" class="w-8 h-8" alt="" />
+        <div class="text-sm">
+          <div class="font-semibold tracking-wide">Danh sách cảnh</div>
+          <div class="text-white/60 text-xs">Chạm để chuyển nhanh</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Exit về màn hình bắt đầu -->
+        <button
+          id="menu-exit"
+          class="p-2 rounded-lg bg-white/10 hover:bg-white/20"
+          title="Về trang bắt đầu"
+        >
+          <!-- icon Exit -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12H3m0 0l4-4m-4 4l4 4M21 5v14"
+            />
+          </svg>
+        </button>
+
+        <!-- Đóng drawer -->
+        <button
+          id="menu-close"
+          class="p-2 rounded-lg bg-white/10 hover:bg-white/20"
+          title="Đóng"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs đơn giản (nếu muốn chia nhóm) -->
+    <div class="px-3 py-2 flex gap-2 text-xs">
+      <button
+        data-filter="all"
+        class="menu-tab active px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25"
+      >
+        Tất cả
+      </button>
+      <button
+        data-filter="gian_truoc"
+        class="menu-tab px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20"
+      >
+        Gian trước
+      </button>
+      <button
+        data-filter="phong_tho"
+        class="menu-tab px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20"
+      >
+        Phòng thờ
+      </button>
+    </div>
+
+    <!-- Danh sách ảnh -->
+    <div
+      id="scene-list"
+      class="p-3 space-y-3 overflow-y-auto h-[calc(100%-132px)]"
+    >
+      <!-- sẽ được render bằng JS -->
+    </div>
+  </aside>
+
   <body>
     <!-- 🌄 MODAL GIỚI THIỆU -->
     <div
@@ -34,17 +128,23 @@
         <h1
           class="text-base md:text-2xl font-extrabold mb-6 drop-shadow-lg uppercase tracking-wide"
         >
-          TOUR THỰC TẾ ẢO TĂNG CƯỜNG (AR) <br/> THAM QUAN DI TÍCH ĐỀN THỜ <br/> CÁC ANH HÙNG LIỆT SĨ <br/> TRUNG ĐOÀN 1 U MINH TẠI TP. CẦN THƠ
+          TOUR THỰC TẾ ẢO TĂNG CƯỜNG (AR) <br />
+          THAM QUAN DI TÍCH ĐỀN THỜ <br />
+          CÁC ANH HÙNG LIỆT SĨ <br />
+          TRUNG ĐOÀN 1 U MINH TẠI TP. CẦN THƠ
         </h1>
         <div class="w-full flex flex-col justify-center items-center">
           <img src="/assets/image/icon/logo.png" class="w-24 h-24" />
         </div>
         <div class="bg-black bg-opacity-20 rounded-lg mt-6">
-        <p class="text-lg md:text-xl mb-4 font-light">
-          Công trình thanh niên chào mừng
-          <br/> thành công Đại hội đại biểu <br/> Đoàn Thanh niên Cộng sản Hồ Chí Minh
-          Phường Hưng Phú lần thứ I <br/> nhiệm kỳ 2025 - 2030.
-        </p>
+          <p class="text-lg md:text-xl mb-4 font-light">
+            Công trình thanh niên chào mừng
+            <br />
+            thành công Đại hội đại biểu <br />
+            Đoàn Thanh niên Cộng sản Hồ Chí Minh Phường Hưng Phú lần thứ I
+            <br />
+            nhiệm kỳ 2025 - 2030.
+          </p>
         </div>
 
         <button
@@ -53,7 +153,9 @@
         >
           🚀 Bắt đầu tham quan
         </button>
-        <p class="text-[10px] mt-4 opacity-80">Bản quyền thuộc về: Đoàn TNCS Hồ Chí Minh Phường Hưng Phú</p>
+        <p class="text-[10px] mt-4 opacity-80">
+          Bản quyền thuộc về: Đoàn TNCS Hồ Chí Minh Phường Hưng Phú
+        </p>
       </div>
     </div>
 
@@ -174,6 +276,28 @@
         >
           Bật / Tắt âm thanh
         </span>
+      </button>
+      <button
+        id="menu-toggle"
+        class="fixed top-[72px] right-4 z-40 bg-black/70 hover:bg-white/10 text-white px-3 py-3 rounded-full shadow-md hover:shadow-lg border border-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md"
+        title="Mở danh sách cảnh"
+      >
+        <!-- icon 3 gạch -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+        <span class="sr-only">Menu</span>
       </button>
     </div>
 
@@ -352,6 +476,7 @@
           rotation="0 0 0"
         >
         </a-panorama>
+
         <a-panorama
           id="gian_truoc_2"
           src="assets/image/gian_truoc/2.jpg"
@@ -364,18 +489,21 @@
           rotation="0 0 0"
         >
         </a-panorama>
+
         <a-panorama
           id="gian_truoc_4"
           src="assets/image/gian_truoc/4.jpg"
           rotation="0 0 0"
         >
         </a-panorama>
+
         <a-panorama
           id="gian_truoc_5"
           src="assets/image/gian_truoc/3.jpg"
           rotation="0 0 0"
         >
         </a-panorama>
+
         <a-panorama
           id="gian_truoc_6"
           src="assets/image/gian_truoc/6.jpg"
@@ -414,11 +542,19 @@
         >
         </a-panorama>
 
+        <!-- Phòng Họp -->
+        <a-panorama
+          id="phong_hop_1"
+          src="assets/image/phong_hop/1.jpg"
+          rotation="0 0 0"
+        >
+        </a-panorama>
+
         <!-- Hotspots -->
         <!-- From Panorama 1 to 2 -->
         <a-hotspot
           for="gian_truoc_1"
-          to="phong_truyen_thong"
+          to="phong_hop_1"
           position="-3 -4 -8"
           rotation="0 20 0"
           visible="true"
@@ -650,7 +786,7 @@
           ></a-image>
         </a-hotspot>
 
-        <a-hotspot
+        <!-- <a-hotspot
           for="phong_truyen_thong"
           to="gian_truoc_1"
           position="2 -3 -8"
@@ -664,6 +800,41 @@
             look-at="[camera]"
             animation=""
             rotation="90 180 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot> -->
+
+        <a-hotspot
+          for="phong_hop_1"
+          to="gian_truoc_1"
+          position="-6 -7 -8"
+          rotation="0 0 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            animation=""
+            rotation="100 180 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_hop_1"
+          to="gian_truoc_1"
+          position="-6 -6 5"
+          rotation="0 0 0"
+          visible="true"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            rotation="85 0 90"
             scale="2 2 2"
           ></a-image>
         </a-hotspot>
@@ -682,8 +853,8 @@
         <a-entity
           cursor
           position="0 0 -1"
-          geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-          material="color: black; shader: flat"
+          geometry="primitive: plane; height: 0.15; width: 0.15"
+          material="shader: flat; src: assets/image/icon/hand-2.png; transparent: true"
         >
         </a-entity>
       </a-entity>
@@ -719,6 +890,9 @@
 
           const tourEl = document.querySelector("a-tour");
           const cameraEl = document.querySelector("[camera]");
+
+          // Mặc định
+          tourEl.components["tour"].loadSceneId("gian_truoc_1");
 
           // Tắt nhạc nền & phát thuyết minh
           if (currentAudio) currentAudio.pause();
@@ -904,6 +1078,169 @@
           if (diff < -50) nextBtn.click();
         });
       });
+
+      // ====================== SIDE MENU (Drawer) ======================
+      const sideMenu = document.getElementById("side-menu");
+      const menuToggle = document.getElementById("menu-toggle");
+      const menuClose = document.getElementById("menu-close");
+      const menuExit = document.getElementById("menu-exit");
+      const sceneListEl = document.getElementById("scene-list");
+      const menuTabs = document.querySelectorAll(".menu-tab");
+
+      const tourEl2 = document.querySelector("a-tour");
+
+      // Khai báo danh sách cảnh (id khớp với <a-panorama id="...">)
+      const SCENES = [
+        // group, id, title, thumb
+        {
+          group: "gian_truoc",
+          id: "gian_truoc_1",
+          title: "Gian trước 1",
+          thumb: "assets/image/gian_truoc/1.jpg",
+        },
+        {
+          group: "gian_truoc",
+          id: "gian_truoc_2",
+          title: "Gian trước 2",
+          thumb: "assets/image/gian_truoc/2.jpg",
+        },
+        {
+          group: "gian_truoc",
+          id: "gian_truoc_3",
+          title: "Gian trước 3",
+          thumb: "assets/image/gian_truoc/5.jpg",
+        },
+        {
+          group: "gian_truoc",
+          id: "gian_truoc_4",
+          title: "Gian trước 4",
+          thumb: "assets/image/gian_truoc/4.jpg",
+        },
+        {
+          group: "gian_truoc",
+          id: "gian_truoc_5",
+          title: "Gian trước 5",
+          thumb: "assets/image/gian_truoc/3.jpg",
+        },
+        {
+          group: "gian_truoc",
+          id: "gian_truoc_6",
+          title: "Gian trước 6",
+          thumb: "assets/image/gian_truoc/6.jpg",
+        },
+
+        {
+          group: "phong_tho",
+          id: "phong_tho",
+          title: "Phòng thờ 1",
+          thumb: "assets/image/gian_tho/1.jpg",
+        },
+        {
+          group: "phong_tho",
+          id: "phong_tho_2",
+          title: "Phòng thờ 2",
+          thumb: "assets/image/gian_tho/2.jpg",
+        },
+        {
+          group: "phong_tho",
+          id: "phong_tho_3",
+          title: "Phòng thờ 3",
+          thumb: "assets/image/gian_tho/4.jpg",
+        },
+        {
+          group: "phong_tho",
+          id: "phong_tho_4",
+          title: "Phòng thờ 4",
+          thumb: "assets/image/gian_tho/5.jpg",
+        },
+
+        {
+          group: "khac",
+          id: "phong_hop_1",
+          title: "Phòng họp",
+          thumb: "assets/image/phong_hop/1.jpg",
+        },
+        {
+          group: "khac",
+          id: "phong_truyen_thong",
+          title: "Phòng truyền thống",
+          thumb: "assets/image/phong_truyen_thong/1.jpg",
+        },
+      ];
+
+      // Render item
+      function renderScenes(filter = "all") {
+        const items = SCENES.filter((s) =>
+          filter === "all" ? true : s.group === filter
+        );
+        sceneListEl.innerHTML = items
+          .map(
+            (s, idx) => `
+    <button data-scene="${s.id}"
+      class="w-full text-left rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/30 focus:ring-2 focus:ring-white/30">
+      <div class="relative">
+        <img src="${s.thumb}" class="w-full aspect-video object-cover" alt="${s.title}" />
+        <!-- tick góc phải khi active sẽ set bằng JS -->
+        <span class="absolute top-2 right-2 hidden h-6 w-6 rounded-full bg-teal-500/90 text-white text-xs
+                     font-bold grid place-items-center">✓</span>
+      </div>
+      <div class="px-3 py-2">
+        <div class="text-sm font-semibold">${s.title}</div>
+        <div class="text-[11px] text-white/60">ID: ${s.id}</div>
+      </div>
+    </button>
+  `
+          )
+          .join("");
+      }
+      renderScenes();
+
+      // Toggle panel
+      menuToggle.addEventListener("click", () => {
+        sideMenu.classList.remove("translate-x-full");
+      });
+      menuClose.addEventListener("click", () => {
+        sideMenu.classList.add("translate-x-full");
+      });
+
+      // Tabs filter
+      menuTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          menuTabs.forEach((t) => t.classList.remove("active", "bg-white/15"));
+          tab.classList.add("active", "bg-white/15");
+          renderScenes(tab.dataset.filter);
+        });
+      });
+
+      // Click item => tải scene & đóng panel
+      sceneListEl.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-scene]");
+        if (!btn) return;
+        const id = btn.dataset.scene;
+
+        // gọi loader bạn đã override ở trên (giữ nguyên hiệu ứng loading)
+        const loader = tourEl2.components["tour"];
+        if (loader && loader.loadSceneId) {
+          loader.loadSceneId(id);
+        }
+        sideMenu.classList.add("translate-x-full");
+      });
+
+      // Exit => về màn hình bắt đầu
+      menuExit.addEventListener("click", () => {
+        sideMenu.classList.add("translate-x-full");
+
+        // Dừng toàn bộ audio đang phát
+        try {
+          if (currentAudio) currentAudio.pause();
+          audioGeneral.pause();
+          narrationAudio.pause();
+        } catch (e) {}
+
+        // Hiện lại modal giới thiệu
+        modal.style.display = "flex";
+        modal.classList.remove("opacity-0", "pointer-events-none");
+      });
     </script>
   </body>
 
@@ -923,6 +1260,9 @@
   </div>
 
   <style>
+    .menu-tab.active {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
     /* Hiệu ứng xoay mượt */
     @keyframes spin-smooth {
       0% {
