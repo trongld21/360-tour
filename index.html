@@ -824,10 +824,27 @@
 
         <a-hotspot
           for="phong_hop_1"
-          to="gian_truoc_1"
+          to="phong_truyen_thong"
           position="-6 -6 5"
-          rotation="0 0 0"
-          visible="true"
+          rotation="0 -90 0"
+          visible="false"
+        >
+          <a-image
+            src="assets/image/icon/arrow.png"
+            width="1"
+            height="1"
+            look-at="[camera]"
+            rotation="85 0 90"
+            scale="2 2 2"
+          ></a-image>
+        </a-hotspot>
+
+        <a-hotspot
+          for="phong_truyen_thong"
+          to="gian_truoc_1"
+          position="4 -10 -10"
+          rotation="0 180 0"
+          visible="false"
         >
           <a-image
             src="assets/image/icon/arrow.png"
@@ -860,6 +877,16 @@
       </a-entity>
     </a-scene>
     <script>
+      // ====================== SIDE MENU (Drawer) ======================
+      const sideMenu = document.getElementById("side-menu");
+      const menuToggle = document.getElementById("menu-toggle");
+      const menuClose = document.getElementById("menu-close");
+      const menuExit = document.getElementById("menu-exit");
+      const sceneListEl = document.getElementById("scene-list");
+      const menuTabs = document.querySelectorAll(".menu-tab");
+
+      const tourEl2 = document.querySelector("a-tour");
+
       document.addEventListener("DOMContentLoaded", () => {
         const modal = document.getElementById("intro-modal");
         const startBtn = document.getElementById("start-tour-btn");
@@ -953,7 +980,7 @@
           const bar = document.getElementById("loading-bar");
           const interval = setInterval(() => {
             progress += Math.random() * 15;
-            bar.style.width = `${Math.min(progress, 95)}%`;
+            if (bar) bar.style.width = `${Math.min(progress, 95)}%`;
             if (progress >= 95) clearInterval(interval);
           }, 200);
 
@@ -1077,17 +1104,82 @@
           if (diff > 50) prevBtn.click();
           if (diff < -50) nextBtn.click();
         });
+
+        // Exit => về màn hình bắt đầu
+        menuExit.addEventListener("click", () => {
+          sideMenu.classList.add("translate-x-full");
+
+          // 🧹 Dừng toàn bộ thẻ <audio> trong DOM
+          document.querySelectorAll("audio").forEach((a) => {
+            a.pause();
+            a.currentTime = 0;
+          });
+
+          // 🧹 Dừng audioGeneral (tạo bằng JS)
+          if (typeof audioGeneral !== "undefined") {
+            audioGeneral.pause();
+            audioGeneral.currentTime = 0;
+          }
+
+          // 🧹 Dừng narrationAudio và currentAudio (nếu đang phát)
+          if (typeof narrationAudio !== "undefined") {
+            narrationAudio.pause();
+            narrationAudio.currentTime = 0;
+          }
+          if (typeof currentAudio !== "undefined" && currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+          }
+
+          // Ẩn thanh thuyết minh nếu đang mở
+          const narrationPlayer = document.getElementById("narration-player");
+          if (narrationPlayer) narrationPlayer.classList.add("hidden");
+
+          // Hiện lại modal toàn màn hình
+          const modal = document.getElementById("intro-modal");
+          if (modal) {
+            modal.style.display = "flex";
+            setTimeout(() => {
+              modal.classList.remove("opacity-0", "pointer-events-none");
+            }, 50);
+          } else {
+            console.warn(
+              "⚠️ Không tìm thấy #intro-modal — kiểm tra lại HTML ID"
+            );
+          }
+
+          // Reset tour về cảnh mặc định
+          const tour = document.querySelector("a-tour");
+          if (tour && tour.components["tour"]) {
+            tour.components["tour"].loadSceneId("gian_truoc_1");
+          }
+
+          // 🧹 Tắt hoàn toàn mọi âm thanh còn sót
+          if (typeof audioGeneral !== "undefined") {
+            audioGeneral.pause();
+            audioGeneral.currentTime = 0;
+          }
+
+          if (typeof narrationAudio !== "undefined") {
+            narrationAudio.pause();
+            narrationAudio.currentTime = 0;
+          }
+
+          // Reset biến trạng thái
+          currentAudio = null;
+
+          // Tắt cờ âm thanh nền
+          soundEnabled = false;
+
+          // Đồng bộ icon tắt tiếng
+          const soundOn = document.getElementById("sound-icon-on");
+          const soundOff = document.getElementById("sound-icon-off");
+          if (soundOn && soundOff) {
+            soundOn.classList.add("hidden");
+            soundOff.classList.remove("hidden");
+          }
+        });
       });
-
-      // ====================== SIDE MENU (Drawer) ======================
-      const sideMenu = document.getElementById("side-menu");
-      const menuToggle = document.getElementById("menu-toggle");
-      const menuClose = document.getElementById("menu-close");
-      const menuExit = document.getElementById("menu-exit");
-      const sceneListEl = document.getElementById("scene-list");
-      const menuTabs = document.querySelectorAll(".menu-tab");
-
-      const tourEl2 = document.querySelector("a-tour");
 
       // Khai báo danh sách cảnh (id khớp với <a-panorama id="...">)
       const SCENES = [
@@ -1224,22 +1316,6 @@
           loader.loadSceneId(id);
         }
         sideMenu.classList.add("translate-x-full");
-      });
-
-      // Exit => về màn hình bắt đầu
-      menuExit.addEventListener("click", () => {
-        sideMenu.classList.add("translate-x-full");
-
-        // Dừng toàn bộ audio đang phát
-        try {
-          if (currentAudio) currentAudio.pause();
-          audioGeneral.pause();
-          narrationAudio.pause();
-        } catch (e) {}
-
-        // Hiện lại modal giới thiệu
-        modal.style.display = "flex";
-        modal.classList.remove("opacity-0", "pointer-events-none");
       });
     </script>
   </body>
