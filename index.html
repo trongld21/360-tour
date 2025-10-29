@@ -1000,19 +1000,32 @@
         function handleSceneChange(id) {
           const isPhongTho = id.includes("phong_tho");
 
-          if (currentAudio) currentAudio.pause();
-          audioGeneral.pause();
-          narrationAudio.pause();
-
+          // Nếu đang ở nhóm "phòng thờ"
           if (isPhongTho) {
-            narrationPlayer.classList.remove("hidden");
-            currentAudio = narrationAudio;
-            narrationAudio.currentTime = 0;
-            if (soundEnabled) narrationAudio.play();
+            // Không reset, chỉ tiếp tục nếu đang phát dở
+            if (currentAudio !== narrationAudio) {
+              // Nếu chuyển từ phòng khác sang phòng thờ
+              if (currentAudio) currentAudio.pause();
+              audioGeneral.pause();
+
+              narrationPlayer.classList.remove("hidden");
+              currentAudio = narrationAudio;
+              if (soundEnabled) narrationAudio.play();
+            } else {
+              // Nếu đang ở trong chuỗi phòng thờ -> không reset, chỉ tiếp tục
+              if (soundEnabled && narrationAudio.paused) narrationAudio.play();
+            }
+
             narrationIconPlay.classList.add("hidden");
             narrationIconPause.classList.remove("hidden");
           } else {
+            // Khi thoát khỏi phòng thờ
+            if (currentAudio === narrationAudio) {
+              narrationAudio.pause(); // chỉ pause, không reset
+            }
             narrationPlayer.classList.add("hidden");
+
+            // Phát nhạc nền khi không ở phòng thờ
             currentAudio = audioGeneral;
             if (soundEnabled) audioGeneral.play();
           }
